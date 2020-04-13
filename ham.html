@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sử dụng hàm</title>
+</head>
+<body>
+<input id="newStudent" type="text" placeholder="họ tên"/>
+<input id="newAddress" type="text" placeholder="Địa chỉ"/>
+<input id="newPhone" type="text" placeholder="Điện thoại"/>
+<button onclick="createNewStudent()">Thêm mới</button>
+<button onclick="showListSudent()">Hiển thị danh sách</button>
+<div id="listStudent">
+</div>
+</body>
+<script>
+    let listStudent = [];
+    function addNewStudent([newStudent, newAddress, newPhone]) {
+        listStudent.push([newStudent, newAddress, newPhone ]);
+    }
+
+    function createNewStudent() {
+        let newStudent = document.getElementById("newStudent").value;
+        let newAddress = document.getElementById("newAddress").value;
+        let newPhone = document.getElementById("newPhone").value;
+
+        addNewStudent([newStudent, newAddress, newPhone])
+        document.getElementById("newStudent").value = "";
+        document.getElementById("newAddress").value = "";
+        document.getElementById("newPhone").value = "";
+        showListSudent();
+    }
+
+    function showListSudent() {
+        let data = "<table border='2px'>";
+        data+="<tr><td>STT</td><td>Họ và tên</td><td>Địa chỉ</td><td>Điện thoại</td><td>Edit</td><td>Delete</td></tr>"
+        for (let i= 0; i<listStudent.length;i++){
+            data+= "<tr>" +
+                '<td>'+(i+1)+'</td>'+
+                '<td>' + listStudent[i][0]+'</td><td>' + listStudent[i][1]+'</td><td>' + listStudent[i][2]+'</td>'
+                +'<td><button onclick="editStudent('+i+')">Edit</button></td>'
+                +'<td><button onclick="deleteStudent('+i+')">Delete</button></td>'+
+                '</tr>';
+        }
+        data+="</table>";
+        document.getElementById("listStudent").innerHTML= data;
+    }
+    function editStudent(index) {
+        let newName = prompt("Sửa tên", listStudent[index][0], );
+        let newAddress = prompt("Sửa địa chỉ", listStudent[index][1], );
+        let newPhone = prompt("Sửa số điện thoại", listStudent[index][2], );
+        listStudent[index][0] = newName;
+        listStudent[index][1] = newAddress;
+        listStudent[index][2] = newPhone;
+        showListSudent();
+    }
+
+    function deleteStudent(index) {
+        let conf = confirm("Bạn có muốn xóa "+ listStudent[index]);
+        if (conf){
+            listStudent.splice(index, 1);
+        }
+        showListSudent();
+    }
+</script>
+</html>
